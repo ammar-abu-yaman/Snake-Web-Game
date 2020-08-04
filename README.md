@@ -7,7 +7,7 @@ To play and enjoy the game
 
 *download or clone the project to your device.
 
-*In the comand line enter the following comands
+*In the comand line enter the following comands:
   *cd "project's folder location".
   *py manage.py runserver 8080.
  
