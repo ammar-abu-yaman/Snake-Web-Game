@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>snake game</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+        }
+        
+        header {
+            padding: 30px;
+            text-align: center;
+            background: #632A50;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 8px 24px gray;
+        }
+        
+        canvas {
+            background: #91F5AD;
+            width: 900px;
+            height: 640px;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            background-color: #e255b3;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #470055;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #8484ff;
+        }
+        
+        #main_menu {
+            width: 500px;
+            height: 500px;
+            background: #387ff2;
+            border-radius: 16px;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .options {
+            width: 100%;
+            height: 35%;
+            text-align: center;
+        }
+        
+        #start_button {
+            font-size: 16px;
+            margin-top: 30px;
+            width: 120px;
+            height: 35px;
+            background-color: #883bd4;
+            border: 2px solid #e255b3;
+            border-radius: 6px;
+            box-shadow: 0 8px 16px black;
+        }
+        
+        #start_button:hover {
+            background-color: #632A50;
+            border: 2px solid #745296;
+        }
+        
+        #start_button:active {
+            background-color: #491237;
+            border: 2px solid #7241a3;
+        }
+        
+        .radio {
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            padding-left: 12px;
+            width: 100%;
+            height: 108.33px;
+            font-size: 24px;
+            vertical-align: middle;
+        }
+        
+        .radio p {
+            font-size: 14px;
+            color: white;
+        }
+        
+        #end_game {
+            width: 500px;
+            height: 500px;
+            background: #387ff2;
+            border-radius: 16px;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+            visibility: hidden;
+        }
+        
+        #end_game label {
+            color: white;
+            display: block;
+            margin-top: 20%;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+        
+        #end_game input {
+            display: inline-block;
+        }
+        
+        #end_game #name_div {
+            width: 100%;
+            height: 30%;
+            text-align: center;
+        }
+        
+        #end_game #name_div input {
+            width: 35%;
+            height: 26px;
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+        
+        #end_game #buttons_div {
+            width: 100%;
+            height: 50%;
+            text-align: center;
+        }
+        
+        #end_game #buttons_div button {
+            width: 120px;
+            height: 40px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        #back_btn {
+            margin-left: 24px;
+            margin-right: 24px;
+            background-color: rgb(236, 53, 20);
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+        
+        #submit_btn {
+            background-color: rgb(18, 175, 18);
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+        
+        #leaderboard_btn {
+            background-color: rgb(27, 4, 131);
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+        
+        #leaderboard {
+            width: 500px;
+            height: 500px;
+            background: #387ff2;
+            border-radius: 16px;
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+            visibility: hidden;
+        }
+        
+        #leaderboard div {
+            width: 100%;
+            height: 20%;
+            text-align: center;
+        }
+        
+        #leaderboard div button {
+            width: 120px;
+            height: 40px;
+            margin: 24px;
+            background-color: rgb(236, 53, 20);
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Snake Web Game</h1>
+
+    </header>
+
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+
+
+    <div id="end_game">
+
+        <div id="name_div">
+            <label>Enter name</label>
+            <input type="text" id="name_field">
+        </div>
+
+        <div id="buttons_div">
+
+            <button id="submit_btn">Submit</button>
+            <button id="back_btn">Back</button>
+            <button id="leaderboard_btn">Leaderboards</button>
+
+        </div>
+
+    </div>
+
+
+    <div id="leaderboard">
+
+        <div>
+
+            <button id="leader_back_btn">Back</button>
+
+        </div>
+
+        <table id="players_table">
+
+
+
+        </table>
+
+    </div>
+
+    <div id="main_menu">
+
+
+
+
+        <div class="options">
+            <button id="start_button" onclick="start_game();">Start Game</button>
+        </div>
+
+        <div class="difficulty-groub">
+
+
+
+            <label class="radio">
+
+                <input type="radio" value="easy" name="difficulty">
+
+                easy
+            <p>
+                no obstacles and moderate snake speed
+            </p>
+                
+
+            </label>
+
+
+            <label class="radio">
+                <input type="radio" value="medium" name="difficulty">
+
+                medium
+                <p>
+                    some light obstacles and generally faster snake speed <br>
+                    recommended for most users
+                </p>
+
+            </label>
+
+            <label class="radio">
+
+                <input type="radio" value="hard" name="difficulty">
+
+                hard
+                
+                <p>
+                    snake is quite fast and many difficult obstacles <br>
+                    are present and blocked wall to wall traversal <br>
+                    recommended for experienced players
+
+                </p>
+
+            </label>
+
+        </div>
+
+    </div>
+
+    {%load static%}
+    <script type="text/javascript" src="{% static 'Main/js/game_logic.js' %}"></script>
+    <script>
+        const back_btn = document.getElementById("back_btn")
+        const submit_btn = document.getElementById("submit_btn")
+        const name_field = document.getElementById("name_field");
+        const end_game_menu = document.getElementById("end_game");
+        const leaderboard_btn = document.getElementById("leaderboard_btn");
+        const leaderboard = document.getElementById("leaderboard")
+        const leader_back_btn = document.getElementById("leader_back_btn")
+        const base = "http://localhost:8000/Main/"
+
+
+
+        function open_leaderboard() {
+
+            end_game_menu.style.visibility = "hidden"
+
+
+            let xhttp = new XMLHttpRequest()
+            let request = base + "leaderboards"
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    let table = document.getElementById('players_table');
+                    let table_content = "<tr><th>Name</th><th>Score</th><th>Difficulty</th></tr>"
+                    let records = JSON.parse(this.responseText).players
+
+                    for (let i = 0; i < records.length; ++i) {
+
+                        record = records[i]
+                        table_content += "<tr>" +
+                            "<td>" + record.name + "</td>" +
+                            "<td>" + record.score + "</td>" +
+                            "<td>" + record.difficulty + "</td>"
+
+                    }
+
+                    table.innerHTML = table_content
+                }
+            };
+
+            xhttp.open("GET", request)
+            xhttp.send()
+
+            leaderboard.style.visibility = "visible"
+
+
+
+
+        }
+
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function submit() {
+
+            if (name_field.value == "") {
+
+                name_field.style.borderColor = "red"
+                return
+            }
+
+            if (name_field.value != "")
+                name_field.style.borderColor = "black"
+
+            let regex = /^[\p{L}\p{N}*-]+$/u
+            if (!name_field.value.match(regex)) {
+                alert("illegal player name!")
+                return
+            }
+
+            let csrftoken = getCookie('csrftoken')
+            console.log(csrftoken)
+            let player = {
+
+                name: name_field.value,
+                score: score,
+                difficulty: difficulty
+            }
+
+            let xhttp = new XMLHttpRequest()
+            let request = base + player.name + "/" + player.score + "/" + player.difficulty
+
+
+            xhttp.open("POST", request, true);
+            xhttp.setRequestHeader('CSRF-Token', csrftoken);
+            xhttp.send()
+        }
+
+        back_btn.onclick = () => {
+            name_field.value = ""
+            end_game_menu.style.visibility = "hidden"
+            main_menu.style.visibility = "visible"
+        }
+
+
+        leader_back_btn.onclick = () => {
+
+            leaderboard.style.visibility = "hidden"
+            end_game_menu.style.visibility = 'visible'
+
+
+        }
+        submit_btn.onclick = submit
+
+        leaderboard_btn.onclick = open_leaderboard
+    </script>
+
+
+</body>
+
+
+</html>
